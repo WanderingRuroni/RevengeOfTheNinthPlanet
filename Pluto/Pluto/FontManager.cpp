@@ -1,0 +1,307 @@
+#include "FontManager.h"
+
+
+// position and texture coordinates of the vertex
+struct VertexPos
+{
+    XMFLOAT3 pos;
+    XMFLOAT2 tex0;
+};
+
+
+FontManager::FontManager( Game* game, ID3D11Device* d3dDevice, ID3D11DeviceContext* d3dContext, IDXGISwapChain* swapChain, ID3D11RenderTargetView* backBufferTarget, float screenX, float screenY ) : solidColorVS_( 0 ), solidColorPS_( 0 ), inputLayout_( 0 ),
+																																										vertexBuffer_( 0 ), colorMap_( 0 ), colorMapSampler_( 0 )
+{
+	game_ = game;
+
+	d3dDevice_ = d3dDevice;
+	d3dContext_ = d3dContext;
+	swapChain_ = swapChain;
+	backBufferTarget_ = backBufferTarget;
+
+	screenX_ = screenX;
+	screenY_ = screenY;
+}
+
+
+FontManager::~FontManager( )
+{
+}
+
+
+// LOAD CONTENT
+
+
+bool FontManager::LoadContent( )
+{
+	ID3DBlob* vsBuffer = 0;
+
+	// compile the vertex shader from fx file
+    bool compileResult = game_->CompileD3DShader( "TextureMap_Font.fx", "VS_Main", "vs_4_0", &vsBuffer );
+
+    if( compileResult == false )
+    {
+        DXTRACE_MSG( "Error compiling the vertex shader!" );
+        return false;
+    }
+
+    HRESULT d3dResult;
+
+	// create the vertex shader
+    d3dResult = d3dDevice_->CreateVertexShader( vsBuffer->GetBufferPointer( ),
+        vsBuffer->GetBufferSize( ), 0, &solidColorVS_ );
+
+    if( FAILED( d3dResult ) )
+    {
+        DXTRACE_MSG( "Error creating the vertex shader!" );
+
+        if( vsBuffer )
+            vsBuffer->Release( );
+
+        return false;
+    }
+
+    D3D11_INPUT_ELEMENT_DESC solidColorLayout[] =
+    {
+        { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+        { "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+    };
+
+    unsigned int totalLayoutElements = ARRAYSIZE( solidColorLayout );
+
+	// create the input layout
+    d3dResult = d3dDevice_->CreateInputLayout( solidColorLayout, totalLayoutElements,
+        vsBuffer->GetBufferPointer( ), vsBuffer->GetBufferSize( ), &inputLayout_ );
+
+    vsBuffer->Release( );
+
+    if( FAILED( d3dResult ) )
+    {
+        DXTRACE_MSG( "Error creating the input layout!" );
+        return false;
+    }
+
+    ID3DBlob* psBuffer = 0;
+
+	// compile the pixel shader from fx file
+    compileResult = game_->CompileD3DShader( "TextureMap_Font.fx", "PS_Main", "ps_4_0", &psBuffer );
+
+    if( compileResult == false )
+    {
+        DXTRACE_MSG( "Error compiling pixel shader!" );
+        return false;
+    }
+
+	// create the pixel shader
+    d3dResult = d3dDevice_->CreatePixelShader( psBuffer->GetBufferPointer( ),
+        psBuffer->GetBufferSize( ), 0, &solidColorPS_ );
+
+    psBuffer->Release( );
+
+    if( FAILED( d3dResult ) )
+    {
+        DXTRACE_MSG( "Error creating pixel shader!" );
+        return false;
+    }
+
+
+	// load the texture image
+    d3dResult = D3DX11CreateShaderResourceViewFromFile( d3dDevice_,
+        "Assets/Images/Font.png", 0, 0, &colorMap_, 0 );
+
+    if( FAILED( d3dResult ) )
+    {
+        DXTRACE_MSG( "Failed to load the texture image!" );
+        return false;
+    }
+
+    D3D11_SAMPLER_DESC colorMapDesc;
+    ZeroMemory( &colorMapDesc, sizeof( colorMapDesc ) );
+    colorMapDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+    colorMapDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+    colorMapDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+    colorMapDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
+    colorMapDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+    colorMapDesc.MaxLOD = D3D11_FLOAT32_MAX;
+
+	// create the sampler state
+    d3dResult = d3dDevice_->CreateSamplerState( &colorMapDesc, &colorMapSampler_ );
+
+    if( FAILED( d3dResult ) )
+    {
+        DXTRACE_MSG( "Failed to create color map sampler state!" );
+        return false;
+    }
+
+    D3D11_BUFFER_DESC vertexDesc;
+    ZeroMemory( &vertexDesc, sizeof( vertexDesc ) );
+    vertexDesc.Usage = D3D11_USAGE_DYNAMIC;
+    vertexDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+    vertexDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+
+    const int sizeOfSprite = sizeof( VertexPos ) * 6;
+    const int maxLetters = 24;
+
+    vertexDesc.ByteWidth = sizeOfSprite * maxLetters;
+
+	// create the vertex buffer
+    d3dResult = d3dDevice_->CreateBuffer( &vertexDesc, 0, &vertexBuffer_ );
+
+    if( FAILED( d3dResult ) )
+    {
+        DXTRACE_MSG( "Failed to create vertex buffer!" );
+        return false;
+    }
+
+    return true;
+}
+
+
+// UNLOAD CONTENT
+
+
+void FontManager::UnloadContent( )
+{
+	if( colorMapSampler_ ) colorMapSampler_->Release( );
+    if( colorMap_ ) colorMap_->Release( );
+	if( solidColorVS_ ) solidColorVS_->Release( );
+    if( solidColorPS_ ) solidColorPS_->Release( );
+    if( inputLayout_ ) inputLayout_->Release( );
+    if( vertexBuffer_ ) vertexBuffer_->Release( );
+
+    colorMapSampler_ = 0;
+    colorMap_ = 0;
+	solidColorVS_ = 0;
+    solidColorPS_ = 0;
+    inputLayout_= 0;
+    vertexBuffer_ = 0;
+}
+
+
+// RENDER
+
+
+void FontManager::Render( string label, float numbers )
+{
+	unsigned int stride = sizeof( VertexPos );
+    unsigned int offset = 0;
+
+    d3dContext_->IASetInputLayout( inputLayout_ );
+    d3dContext_->IASetVertexBuffers( 0, 1, &vertexBuffer_, &stride, &offset );
+    d3dContext_->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
+
+    d3dContext_->VSSetShader( solidColorVS_, 0, 0 );
+    d3dContext_->PSSetShader( solidColorPS_, 0, 0 );
+    d3dContext_->PSSetShaderResources( 0, 1, &colorMap_ );
+    d3dContext_->PSSetSamplers( 0, 1, &colorMapSampler_ );
+
+	// convert fps from float to string
+	ostringstream buffer;
+	buffer << numbers;
+	string content = buffer.str();
+
+	// combine the label and the content
+	label.append(content);
+
+	// covert string to char*
+	char message[50];
+	strcpy_s( message, label.c_str() );
+
+	// draw the message on the screen
+    DrawString( message, screenX_, screenY_);
+}
+
+
+// ADDITIONAL FUNCTIONS
+
+
+// draws the given message on the screen
+bool FontManager::DrawString( char* message, float startX, float startY )
+{
+    // size in bytes for a single sprite
+    const int sizeOfSprite = sizeof( VertexPos ) * 6;
+
+    // dynamic buffer setup for max of 24 letters
+    const int maxLetters = 24;
+
+    int length = strlen( message );
+
+    // clamp for strings too long
+    if( length > maxLetters )
+        length = maxLetters;
+
+    // char's width on screen
+	float charWidth = 32.0f / game_->GetScreenWidth( );
+
+    // char's height on screen
+	float charHeight = 38.0f / game_->GetScreenHeight( );
+    
+    // char's texel width
+    float texelWidth = 32.0f / 3040.0f;
+
+    // verts per-triangle (3) * total triangles (2) = 6
+    const int verticesPerLetter = 6;
+
+    D3D11_MAPPED_SUBRESOURCE mapResource;
+    HRESULT d3dResult = d3dContext_->Map( vertexBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapResource );
+
+    if( FAILED( d3dResult ) )
+    {
+        DXTRACE_MSG( "Failed to map resource!" );
+        return false;
+    }
+
+    // point to our vertex buffer's internal data
+    VertexPos *spritePtr = ( VertexPos* )mapResource.pData;
+
+    const int indexFirst = static_cast<char>( ' ' );
+    const int indexLast = static_cast<char>( '~' );
+
+    for( int i = 0; i < length; ++i )
+    {
+        float thisStartX = startX + ( charWidth * static_cast<float>( i ) );
+        float thisEndX = thisStartX + charWidth;
+        float thisEndY = startY + charHeight;
+
+		// set the vertex positions
+        spritePtr[0].pos = XMFLOAT3( thisEndX,   thisEndY, 1.0f );
+        spritePtr[1].pos = XMFLOAT3( thisEndX,   startY,   1.0f );
+        spritePtr[2].pos = XMFLOAT3( thisStartX, startY,   1.0f );
+        spritePtr[3].pos = XMFLOAT3( thisStartX, startY,   1.0f );
+        spritePtr[4].pos = XMFLOAT3( thisStartX, thisEndY, 1.0f );
+        spritePtr[5].pos = XMFLOAT3( thisEndX,   thisEndY, 1.0f );
+
+        int texLookup = 0;
+        int letter = static_cast<char>( message[i] );
+
+        if( letter < indexFirst || letter > indexLast )
+        {
+            // grab the first index, which is a blank space in the texture
+            texLookup = 0;
+        }
+        else
+        {
+            // space = 0, ! = 1, ~ = 126, etc
+            texLookup = ( letter - indexFirst );
+        }
+
+        float tuStart = 0.0f + ( texelWidth * static_cast<float>( texLookup ) );
+        float tuEnd = tuStart + texelWidth;
+
+		// align the texture
+        spritePtr[0].tex0 = XMFLOAT2( tuEnd, 0.0f );
+        spritePtr[1].tex0 = XMFLOAT2( tuEnd, 1.0f );
+        spritePtr[2].tex0 = XMFLOAT2( tuStart, 1.0f );
+        spritePtr[3].tex0 = XMFLOAT2( tuStart, 1.0f );
+        spritePtr[4].tex0 = XMFLOAT2( tuStart, 0.0f );
+        spritePtr[5].tex0 = XMFLOAT2( tuEnd, 0.0f );
+
+        spritePtr += 6;
+    }
+
+	// unmap the buffer and draw all the vertices
+    d3dContext_->Unmap( vertexBuffer_, 0 );
+    d3dContext_->Draw( 6 * length, 0 );
+
+    return true;
+}

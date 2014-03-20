@@ -1,0 +1,293 @@
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/repos/teamaggro/!svn/ver/306/Pluto/Pluto
+END
+SpriteSheet.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/repos/teamaggro/!svn/ver/272/Pluto/Pluto/SpriteSheet.cpp
+END
+GameSprite.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/repos/teamaggro/!svn/ver/272/Pluto/Pluto/GameSprite.cpp
+END
+FontManager.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/repos/teamaggro/!svn/ver/298/Pluto/Pluto/FontManager.cpp
+END
+Seahorses.h
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/repos/teamaggro/!svn/ver/284/Pluto/Pluto/Seahorses.h
+END
+Pluto.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/repos/teamaggro/!svn/ver/300/Pluto/Pluto/Pluto.cpp
+END
+Pluto.aps
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/repos/teamaggro/!svn/ver/302/Pluto/Pluto/Pluto.aps
+END
+Gangstar.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/repos/teamaggro/!svn/ver/298/Pluto/Pluto/Gangstar.cpp
+END
+Level.h
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/repos/teamaggro/!svn/ver/282/Pluto/Pluto/Level.h
+END
+Comet.h
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/repos/teamaggro/!svn/ver/282/Pluto/Pluto/Comet.h
+END
+Pluto.vcxproj
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/repos/teamaggro/!svn/ver/291/Pluto/Pluto/Pluto.vcxproj
+END
+Game.h
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/repos/teamaggro/!svn/ver/290/Pluto/Pluto/Game.h
+END
+Satellites.h
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/repos/teamaggro/!svn/ver/282/Pluto/Pluto/Satellites.h
+END
+Asteroid.h
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/repos/teamaggro/!svn/ver/282/Pluto/Pluto/Asteroid.h
+END
+GameTimer.h
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/repos/teamaggro/!svn/ver/85/Pluto/Pluto/GameTimer.h
+END
+Background.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/repos/teamaggro/!svn/ver/298/Pluto/Pluto/Background.cpp
+END
+Bullets.h
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/repos/teamaggro/!svn/ver/282/Pluto/Pluto/Bullets.h
+END
+Icon.ico
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/repos/teamaggro/!svn/ver/291/Pluto/Pluto/Icon.ico
+END
+Pluto.vcxproj.filters
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/repos/teamaggro/!svn/ver/291/Pluto/Pluto/Pluto.vcxproj.filters
+END
+Neptune.h
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/repos/teamaggro/!svn/ver/293/Pluto/Pluto/Neptune.h
+END
+main.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/repos/teamaggro/!svn/ver/292/Pluto/Pluto/main.cpp
+END
+PowerUps.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/repos/teamaggro/!svn/ver/298/Pluto/Pluto/PowerUps.cpp
+END
+Pluto.rc
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/repos/teamaggro/!svn/ver/291/Pluto/Pluto/Pluto.rc
+END
+Hud.h
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/repos/teamaggro/!svn/ver/282/Pluto/Pluto/Hud.h
+END
+MouseCursor.h
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/repos/teamaggro/!svn/ver/282/Pluto/Pluto/MouseCursor.h
+END
+resource.h
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/repos/teamaggro/!svn/ver/291/Pluto/Pluto/resource.h
+END
+Seahorses.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/repos/teamaggro/!svn/ver/310/Pluto/Pluto/Seahorses.cpp
+END
+SplashScreen.h
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/repos/teamaggro/!svn/ver/288/Pluto/Pluto/SplashScreen.h
+END
+TextureMap_Sprites.fx
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/repos/teamaggro/!svn/ver/85/Pluto/Pluto/TextureMap_Sprites.fx
+END
+SpriteSheet.h
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/repos/teamaggro/!svn/ver/272/Pluto/Pluto/SpriteSheet.h
+END
+GameSprite.h
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/repos/teamaggro/!svn/ver/283/Pluto/Pluto/GameSprite.h
+END
+FontManager.h
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/repos/teamaggro/!svn/ver/282/Pluto/Pluto/FontManager.h
+END
+Level.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/repos/teamaggro/!svn/ver/308/Pluto/Pluto/Level.cpp
+END
+Comet.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/repos/teamaggro/!svn/ver/298/Pluto/Pluto/Comet.cpp
+END
+Pluto.h
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/repos/teamaggro/!svn/ver/282/Pluto/Pluto/Pluto.h
+END
+Game.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/repos/teamaggro/!svn/ver/300/Pluto/Pluto/Game.cpp
+END
+Satellites.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/repos/teamaggro/!svn/ver/298/Pluto/Pluto/Satellites.cpp
+END
+GameTimer.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/repos/teamaggro/!svn/ver/85/Pluto/Pluto/GameTimer.cpp
+END
+Asteroid.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/repos/teamaggro/!svn/ver/298/Pluto/Pluto/Asteroid.cpp
+END
+Bullets.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/repos/teamaggro/!svn/ver/282/Pluto/Pluto/Bullets.cpp
+END
+Gangstar.h
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/repos/teamaggro/!svn/ver/284/Pluto/Pluto/Gangstar.h
+END
+Neptune.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/repos/teamaggro/!svn/ver/309/Pluto/Pluto/Neptune.cpp
+END
+TextureMap_Font.fx
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/repos/teamaggro/!svn/ver/85/Pluto/Pluto/TextureMap_Font.fx
+END
+Hud.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/repos/teamaggro/!svn/ver/298/Pluto/Pluto/Hud.cpp
+END
+Background.h
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/repos/teamaggro/!svn/ver/282/Pluto/Pluto/Background.h
+END
+MouseCursor.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/repos/teamaggro/!svn/ver/298/Pluto/Pluto/MouseCursor.cpp
+END
+Pluto.vcxproj.user
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/repos/teamaggro/!svn/ver/85/Pluto/Pluto/Pluto.vcxproj.user
+END
+PowerUps.h
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/repos/teamaggro/!svn/ver/282/Pluto/Pluto/PowerUps.h
+END
+SplashScreen.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/repos/teamaggro/!svn/ver/300/Pluto/Pluto/SplashScreen.cpp
+END
